@@ -7,8 +7,12 @@ clean:
 	rm -rf ./venv ./*.bin
 
 deps:
-	virtualenv -p python3 ./venv
+	sudo echo
+	virtualenv -p python3 ./venv ./webrepl_cli
 	./venv/bin/pip3 install -r requirements.txt
+	cd venv/ && git clone https://github.com/micropython/webrepl.git
+	echo "./venv/bin/python venv/webrepl/webrepl_cli.py \$@" > webrepl_cli
+	chmod +x ./webrepl_cli
 	sudo apt install -y picocom
 
 download:
@@ -22,3 +26,6 @@ write:
 
 repl:
 	picocom /dev/ttyUSB0 -b115200
+
+webrepl:
+	xdg-open http://micropython.org/webrepl
