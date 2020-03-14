@@ -1,7 +1,12 @@
 
 FW ?= esp8266-20191220-v1.12.bin
 
-setup:
+setup: clean deps download
+
+clean:
+	rm -rf ./venv ./*.bin
+
+deps:
 	virtualenv -p python3 ./venv
 	./venv/bin/pip3 install -r requirements.txt
 	sudo apt install -y picocom
