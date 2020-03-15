@@ -4,15 +4,17 @@ FW ?= esp8266-20191220-v1.12.bin
 setup: clean deps download
 
 clean:
-	rm -rf ./venv ./*.bin
+	rm -rf ./venv ./*.bin ./webrepl_cli ./pyboard
 
 deps:
 	sudo echo
-	virtualenv -p python3 ./venv ./webrepl_cli
+	virtualenv -p python3 ./venv
 	./venv/bin/pip3 install -r requirements.txt
 	cd venv/ && git clone https://github.com/micropython/webrepl.git
 	echo "./venv/bin/python venv/webrepl/webrepl_cli.py \$@" > webrepl_cli
-	chmod +x ./webrepl_cli
+	cd venv && wget https://raw.githubusercontent.com/micropython/micropython/master/tools/pyboard.py
+	echo "./venv/bin/python ./venv/pyboard.py -b 115200 --device /dev/ttyUSB0 \$@" > pyboard
+	chmod +x ./webrepl_cli ./pyboard
 	sudo apt install -y picocom
 
 download:

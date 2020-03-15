@@ -1,3 +1,6 @@
 /venv
 /*.bin
 /tmp
+/pyboard
+/webrepl_cli
+/.ropeproject
