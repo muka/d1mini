@@ -3,11 +3,11 @@ import gc
 import machine
 import webrepl
 import esp
-import mymod
+import main
 # import uos
 # esp.osdebug(None)
 # uos.dupterm(None, 1) # disable REPL on UART(0)
 webrepl.start()
 gc.collect()
 
-mymod.run()
+main.run()

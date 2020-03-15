@@ -4,3 +4,4 @@
 /pyboard
 /webrepl_cli
 /.ropeproject
+/config.py
