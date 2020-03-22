@@ -1,4 +1,5 @@
 
+TAG ?= latest
 FW ?= esp8266-20191220-v1.12.bin
 
 setup: clean deps download
@@ -23,11 +24,23 @@ download:
 reset:
 	./venv/bin/esptool.py --port /dev/ttyUSB0 erase_flash
 
-write:
+write/d1mini:
 	./venv/bin/esptool.py --port /dev/ttyUSB0 --baud 1000000 write_flash --flash_size=4MB -fm dio 0 ${FW}
+
+write/nodemcu:
+	./venv/bin/esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 ${FW}
 
 repl:
 	picocom /dev/ttyUSB0 -b115200
 
 webrepl:
 	xdg-open http://micropython.org/webrepl
+
+mqtt-server:
+	docker run -d -p 1883:1883 eclipse-mosquitto
+
+docker/build:
+	docker build . -t opny/micropython
+
+docker/push:
+	docker push opny/micropython:${TAG}

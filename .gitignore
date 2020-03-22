@@ -4,4 +4,6 @@
 /pyboard
 /webrepl_cli
 /.ropeproject
-/config.py
+config.py
+/history
+/scripts/config.py
